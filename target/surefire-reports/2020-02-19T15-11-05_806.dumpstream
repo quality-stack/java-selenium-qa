@@ -1,0 +1,4 @@
+# Created at 2020-02-19T15:11:06.136
+Boot Manifest-JAR contains absolute paths in classpath 'E:\RoundTripMVN\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+
