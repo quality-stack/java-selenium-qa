@@ -16,7 +16,7 @@ public class baseLibrary
 	@Parameters({"browsername","type","url"})
 	public void preconditon(String browsername, String type, String url)
 	{
-		driver = browserFactory.OpenBrowser(browsername, type, url);
+		driver = browserFactory.openBrowser(browsername, type, url);
 //		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver.get(url);

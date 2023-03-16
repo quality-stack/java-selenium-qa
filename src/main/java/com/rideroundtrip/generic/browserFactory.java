@@ -14,7 +14,7 @@ public class browserFactory
 {
 	static WebDriver driver;
 	
-	public static WebDriver OpenBrowser(String browser,String session,String URL)
+	public static WebDriver openBrowser(String browser,String session,String URL)
 	{
 		if (session.equalsIgnoreCase("normal"))
 		{
@@ -48,9 +48,7 @@ public class browserFactory
 			}
 		}
 		
-		else if (session.equalsIgnoreCase("incognito"))
-		{
-			if(browser.equalsIgnoreCase("chrome"))
+		else if (session.equalsIgnoreCase("incognito") && (browser.equalsIgnoreCase("chrome")))
 			{
 				System.setProperty("webdriver.chrome.driver", "./exefiles/chromedriver.exe");
 				ChromeOptions options = new ChromeOptions();
@@ -59,7 +57,6 @@ public class browserFactory
 				//options.addArguments("--window-size=375,812");
 				driver = new ChromeDriver(options);
 				Reporter.log("Chrome Incognito Launched...!",true);
-			}
 		}
 		
 		driver.manage().deleteAllCookies();
