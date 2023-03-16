@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
+  <test thread-count="5" name="Default test(failed)">
+    <classes>
+      <class name="com.rideroundtrip.scripts.SearchPatientTest">
+        <methods>
+          <include name="invalidSearch"/>
+          <include name="validSearch"/>
+          <include name="preconditon"/>
+          <include name="postcondition"/>
+        </methods>
+      </class> <!-- com.rideroundtrip.scripts.SearchPatientTest -->
+      <class name="com.rideroundtrip.scripts.SearchBusTest">
+        <methods>
+          <include name="searchBuses"/>
+          <include name="preconditon"/>
+          <include name="postcondition"/>
+        </methods>
+      </class> <!-- com.rideroundtrip.scripts.SearchBusTest -->
+      <class name="com.rideroundtrip.scripts.LoginTest">
+        <methods>
+          <include name="validLogin"/>
+          <include name="preconditon"/>
+          <include name="invalidLogin"/>
+          <include name="postcondition"/>
+        </methods>
+      </class> <!-- com.rideroundtrip.scripts.LoginTest -->
+      <class name="com.rideroundtrip.scripts.BookTripTest">
+        <methods>
+          <include name="bookAmbulatory"/>
+          <include name="bookStretcher"/>
+          <include name="bookLyft"/>
+          <include name="preconditon"/>
+          <include name="bookWheelchair"/>
+          <include name="postcondition"/>
+          <include name="bookMedicalSedan"/>
+        </methods>
+      </class> <!-- com.rideroundtrip.scripts.BookTripTest -->
+    </classes>
+  </test> <!-- Default test(failed) -->
+</suite> <!-- Failed suite [Default suite] -->
