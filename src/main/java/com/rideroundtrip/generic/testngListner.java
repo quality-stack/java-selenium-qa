@@ -16,18 +16,21 @@ import com.google.common.io.Files;
 public class testngListner implements ITestListener
 {
 	public static int totalTestExecuted, successcount, failcount, skipcount=0;
+	@Override
 	public void onTestStart(ITestResult result) 
 	{
 		totalTestExecuted++;
 		Reporter.log(result.getName()+"script execution starts at "+ new Date(),true);	
 	}
 
+	@Override
 	public void onTestSuccess(ITestResult result) 
 	{
 		successcount++;
 		Reporter.log(result.getName()+" script is passed",true);	
 	}
 
+	@Override
 	public void onTestFailure(ITestResult result) 
 	{
 		failcount++;
@@ -47,23 +50,27 @@ public class testngListner implements ITestListener
 		Reporter.log("Screenshot is captured",true);
 	}
 
+	@Override
 	public void onTestSkipped(ITestResult result) 
 	{
 		skipcount++;
 		Reporter.log(result.getName()+" script is skipped",true);
 	}
 
+	@Override
 	public void onTestFailedButWithinSuccessPercentage(ITestResult result) 
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
+	@Override
 	public void onStart(ITestContext context) 
 	{
 		Reporter.log("Suite Execution Started at "+new Date(),true);
 	}
 
+	@Override
 	public void onFinish(ITestContext context)
 	{
 		Reporter.log("Suite Execution ended at "+new Date(),true);

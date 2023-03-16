@@ -73,19 +73,10 @@ public class excelUtility
 				}
 		}
 	}
-		catch(FileNotFoundException e)
+		catch(EncryptedDocumentException | IOException e)
 		{
 			e.printStackTrace();
 		}
-		catch(EncryptedDocumentException e)
-		{
-			e.printStackTrace();
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
-		
 		return value;
 		
 	}
