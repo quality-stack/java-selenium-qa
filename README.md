@@ -22,6 +22,8 @@ mvn test
 
 Allure result files are written to `target/allure-results`.
 
+SMTP execution email can also be triggered automatically after the Maven test phase when SMTP is enabled.
+
 ## Viewing Allure reports
 
 Generate the HTML report:
@@ -35,6 +37,45 @@ Open the generated report locally:
 ```bash
 mvn allure:serve
 ```
+
+## Automatic email on each build execution
+
+The framework can send an SMTP summary email automatically after every `mvn test` execution. The TestNG listener writes the execution summary, Maven generates the Allure report, the mailer sends the email with both TestNG and Allure artifacts attached, and then a build guard fails the Maven run if there were test failures.
+
+Set these values in `src/test/resources/framework.properties` or pass them as system properties:
+
+- `smtp.enabled=true`
+- `smtp.host`
+- `smtp.port`
+- `smtp.username`
+- `smtp.password`
+- `smtp.from`
+- `smtp.to`
+
+Optional values:
+
+- `smtp.cc`
+- `smtp.auth`
+- `smtp.starttls`
+- `smtp.ssl`
+- `smtp.subject.prefix`
+
+Example:
+
+```bash
+mvn test -Dsmtp.enabled=true -Dsmtp.host=smtp.gmail.com -Dsmtp.port=587 -Dsmtp.username=your-user@gmail.com -Dsmtp.password=your-app-password -Dsmtp.from=your-user@gmail.com -Dsmtp.to=qa-team@example.com,dev-team@example.com
+```
+
+The email includes:
+
+- suite and test names
+- start and finish times
+- passed, failed, skipped, and total counts
+- the TestNG `emailable-report.html` as an attachment when available
+- a zipped generated Allure report artifact
+- a zipped Allure raw results artifact
+
+If tests fail, the email step still runs first and the Maven build fails afterward so CI still gets the correct failed status.
 
 ## Running with custom configuration
 

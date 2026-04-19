@@ -65,6 +65,16 @@ public final class FrameworkConfig
         }
     }
 
+    public boolean getBoolean(String key, boolean defaultValue)
+    {
+        String value = get(key);
+        if (!isPresent(value)) {
+            return defaultValue;
+        }
+
+        return Boolean.parseBoolean(value);
+    }
+
     private void loadProperties()
     {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();

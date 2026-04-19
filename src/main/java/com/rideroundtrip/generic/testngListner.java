@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Date;
+import java.util.Properties;
 
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -80,6 +81,10 @@ public class testngListner implements ITestListener
 	@Override
 	public void onStart(ITestContext context) 
 	{
+		totalTestExecuted = 0;
+		successcount = 0;
+		failcount = 0;
+		skipcount = 0;
 		Reporter.log("Suite Execution Started at "+new Date(),true);
 	}
 
@@ -89,6 +94,35 @@ public class testngListner implements ITestListener
 		Reporter.log("Suite Execution ended at "+new Date(),true);
 		Reporter.log("Total scripts passed "+successcount,true);
 		Reporter.log("Total scripts failed "+failcount,true);
-		Reporter.log("Total scripts skipped "+skipcount,true);	
+		Reporter.log("Total scripts skipped "+skipcount,true);
+		writeExecutionSummary(context);
+	}
+
+	private void writeExecutionSummary(ITestContext context)
+	{
+		File targetDirectory = new File("./target");
+		if (!targetDirectory.exists()) {
+			targetDirectory.mkdirs();
+		}
+
+		Properties summary = new Properties();
+		summary.setProperty("suite.name", context.getSuite().getName());
+		summary.setProperty("test.name", context.getName());
+		summary.setProperty("start.time", Long.toString(context.getStartDate().getTime()));
+		summary.setProperty("end.time", Long.toString(context.getEndDate().getTime()));
+		summary.setProperty("total.count", Integer.toString(totalTestExecuted));
+		summary.setProperty("passed.count", Integer.toString(successcount));
+		summary.setProperty("failed.count", Integer.toString(failcount));
+		summary.setProperty("skipped.count", Integer.toString(skipcount));
+
+		File summaryFile = new File(targetDirectory, "email-summary.properties");
+		try (java.io.OutputStream outputStream = Files.newOutputStream(summaryFile.toPath()))
+		{
+			summary.store(outputStream, "Execution summary");
+		}
+		catch (IOException exception)
+		{
+			throw new IllegalStateException("Unable to write execution summary", exception);
+		}
 	}
 }

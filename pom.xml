@@ -14,6 +14,8 @@
       <surefire.suiteXmlFile>testng.xml</surefire.suiteXmlFile>
       <allure.version>2.29.1</allure.version>
       <allure.maven.version>2.12.0</allure.maven.version>
+      <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+      <allure.report.directory>${project.build.directory}/allure-report</allure.report.directory>
       <sonar.organization>quality-stack</sonar.organization>
       <sonar.host.url>https://sonarcloud.io</sonar.host.url>
    </properties>
@@ -24,8 +26,9 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <version>3.0.0-M3</version>
             <configuration>
+               <testFailureIgnore>true</testFailureIgnore>
                <systemPropertyVariables>
-                  <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                  <allure.results.directory>${allure.results.directory}</allure.results.directory>
                </systemPropertyVariables>
                <suiteXmlFiles>
                   <suiteXmlFile>${surefire.suiteXmlFile}</suiteXmlFile>
@@ -45,6 +48,49 @@
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-maven</artifactId>
             <version>${allure.maven.version}</version>
+            <configuration>
+               <reportVersion>${allure.version}</reportVersion>
+               <resultsDirectory>${allure.results.directory}</resultsDirectory>
+               <reportDirectory>${allure.report.directory}</reportDirectory>
+            </configuration>
+            <executions>
+               <execution>
+                  <id>generate-allure-report</id>
+                  <phase>test</phase>
+                  <goals>
+                     <goal>report</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+         <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.5.0</version>
+            <executions>
+               <execution>
+                  <id>send-build-email</id>
+                  <phase>test</phase>
+                  <goals>
+                     <goal>java</goal>
+                  </goals>
+                  <configuration>
+                     <mainClass>com.rideroundtrip.generic.BuildReportMailer</mainClass>
+                     <classpathScope>test</classpathScope>
+                  </configuration>
+               </execution>
+               <execution>
+                  <id>enforce-test-failures</id>
+                  <phase>test</phase>
+                  <goals>
+                     <goal>java</goal>
+                  </goals>
+                  <configuration>
+                     <mainClass>com.rideroundtrip.generic.BuildFailureGuard</mainClass>
+                     <classpathScope>test</classpathScope>
+                  </configuration>
+               </execution>
+            </executions>
          </plugin>
       </plugins>
    </build>
@@ -117,6 +163,11 @@
          <groupId>io.qameta.allure</groupId>
          <artifactId>allure-testng</artifactId>
          <version>${allure.version}</version>
+      </dependency>
+      <dependency>
+         <groupId>com.sun.mail</groupId>
+         <artifactId>javax.mail</artifactId>
+         <version>1.6.2</version>
       </dependency>
    </dependencies>
 </project>
