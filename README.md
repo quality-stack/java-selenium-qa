@@ -12,6 +12,7 @@ Reusable Java Selenium/TestNG framework with central configuration, data-driven 
 - Fixed obvious framework bugs such as broken RedBus locators, string comparison with `==`, and unsafe screenshot handling.
 - Added Allure reporting with TestNG integration and screenshot attachments on failure.
 - Added automatic browser-driver management so local ChromeDriver binaries are no longer required by default.
+- Added direct Apache Commons, SLF4J, and Log4j2 Maven dependencies so utility and logging libraries are managed through the build instead of legacy bundled jars.
 
 ## Default execution
 
@@ -110,6 +111,7 @@ For app-specific flows like login, patient search, and trip booking, set the rel
 ## Notes
 
 - Browser drivers are auto-managed by default using WebDriverManager, which resolves a compatible driver version at runtime.
+- SLF4J now routes to Log4j2 through the Maven dependency graph, so new logging code can use the SLF4J API directly.
 - If you want to force a specific local binary instead, set `driver.chrome.path`, `driver.edge.path`, `driver.firefox.path`, or `driver.ie.path`.
 - You can disable auto-management with `driver.auto.manage=false`.
 - If required app-specific values are missing, those tests are skipped instead of failing for configuration reasons.
