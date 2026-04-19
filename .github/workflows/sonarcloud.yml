@@ -31,8 +31,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    types: [opened, synchronize, reopened]
 jobs:
   build:
     name: Build and analyze
@@ -63,6 +61,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: >
-          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+          mvn -B verify -Pci-reporting org.sonarsource.scanner.maven:sonar-maven-plugin:5.5.0.6356:sonar
           -Dsonar.projectKey=quality-stack_java-selenium-qa
           -Dsonar.organization=quality-stack
