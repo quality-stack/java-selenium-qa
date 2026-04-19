@@ -49,7 +49,6 @@
             <artifactId>allure-maven</artifactId>
             <version>${allure.maven.version}</version>
             <configuration>
-               <reportVersion>${allure.version}</reportVersion>
                <resultsDirectory>${allure.results.directory}</resultsDirectory>
                <reportDirectory>${allure.report.directory}</reportDirectory>
             </configuration>
