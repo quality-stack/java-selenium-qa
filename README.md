@@ -10,6 +10,7 @@ Reusable Java Selenium/TestNG framework with central configuration, data-driven 
 - Replaced brittle test method signatures with TestNG data providers.
 - Added a reusable authenticated test base for application-specific flows.
 - Fixed obvious framework bugs such as broken RedBus locators, string comparison with `==`, and unsafe screenshot handling.
+- Added Allure reporting with TestNG integration and screenshot attachments on failure.
 
 ## Default execution
 
@@ -17,6 +18,22 @@ The default suite still runs the public RedBus search flow:
 
 ```bash
 mvn test
+```
+
+Allure result files are written to `target/allure-results`.
+
+## Viewing Allure reports
+
+Generate the HTML report:
+
+```bash
+mvn allure:report
+```
+
+Open the generated report locally:
+
+```bash
+mvn allure:serve
 ```
 
 ## Running with custom configuration

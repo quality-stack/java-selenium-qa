@@ -1,4 +1,6 @@
 /target/
 /test-output/
 /screenshots/
+/allure-report/
+/allure-results/
 /.DS_Store

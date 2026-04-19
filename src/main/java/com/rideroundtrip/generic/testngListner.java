@@ -2,6 +2,8 @@ package com.rideroundtrip.generic;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.Date;
 
 import org.openqa.selenium.OutputType;
@@ -11,7 +13,7 @@ import org.testng.ITestListener;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 
-import com.google.common.io.Files;
+import io.qameta.allure.Allure;
 
 public class testngListner implements ITestListener
 {
@@ -48,7 +50,11 @@ public class testngListner implements ITestListener
 		File destFile = new File(screenshotDirectory, result.getName()+".png");
 		try 
 		{
-			Files.copy(srcFile,destFile);
+			Files.copy(srcFile.toPath(),destFile.toPath());
+			try (InputStream screenshotStream = Files.newInputStream(destFile.toPath()))
+			{
+				Allure.addAttachment(result.getName() + " screenshot", "image/png", screenshotStream, ".png");
+			}
 		}
 		catch (IOException e) 
 		{
