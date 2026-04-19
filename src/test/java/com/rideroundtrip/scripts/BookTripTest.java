@@ -34,3 +34,4 @@ public class BookTripTest extends AuthenticatedTest
         patientNeedsFeature.selectVehicleType(transportType);
     }
 }
+

@@ -12,20 +12,20 @@ import com.rideroundtrip.pageobjects.TripPaymentPage;
 
 public class PatientFeature
 {
-	WebDriver driver;
-	LoginPage loginpage;
-	ScheduledTripsPage sctp;
-	SelectPatientPage spp;
-	SetupTripPage stp;
-	PatientNeedsPage pnp;
-	TripPaymentPage tpp;
-	ReviewPage rp;
-	
-	public PatientFeature (WebDriver driver)
-	{
-		this.driver = driver;
-		sctp = new ScheduledTripsPage(driver);
-		spp = new SelectPatientPage(driver) ;
-		stp = new SetupTripPage(driver);
-	}
+    WebDriver driver;
+    LoginPage loginpage;
+    ScheduledTripsPage sctp;
+    SelectPatientPage spp;
+    SetupTripPage stp;
+    PatientNeedsPage pnp;
+    TripPaymentPage tpp;
+    ReviewPage rp;
+    
+    public PatientFeature (WebDriver driver)
+    {
+        this.driver = driver;
+        sctp = new ScheduledTripsPage(driver);
+        spp = new SelectPatientPage(driver) ;
+        stp = new SetupTripPage(driver);
+    }
 }

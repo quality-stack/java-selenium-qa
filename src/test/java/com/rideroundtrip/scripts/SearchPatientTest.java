@@ -30,3 +30,4 @@ public class SearchPatientTest extends AuthenticatedTest
       patientFeature.verifysearch(validationType.intValue());
   }
 }
+

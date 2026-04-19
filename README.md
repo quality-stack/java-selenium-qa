@@ -110,3 +110,4 @@ For app-specific flows like login, patient search, and trip booking, set the rel
 
 - Browser driver paths are optional and can be set with properties such as `driver.chrome.path`.
 - If required app-specific values are missing, those tests are skipped instead of failing for configuration reasons.
+

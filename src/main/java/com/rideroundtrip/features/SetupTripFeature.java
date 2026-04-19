@@ -13,75 +13,75 @@ import com.rideroundtrip.pageobjects.TripPaymentPage;
 
 public class SetupTripFeature 
 {
-	WebDriver driver;
-	LoginPage loginpage;
-	ScheduledTripsPage sctp;
-	SelectPatientPage spp;
-	SetupTripPage stp;
-	PatientNeedsPage pnp;
-	TripPaymentPage tpp;
-	ReviewPage rp;
-	
-	public SetupTripFeature (WebDriver driver)
-	{
-		this.driver = driver;
-		spp = new SelectPatientPage(driver) ;
-		stp = new SetupTripPage(driver);
-	}
-	
-	public void selectTripType(String tripType)
-	{
-		if("One-Way".equalsIgnoreCase(tripType) || "OneWay".equalsIgnoreCase(tripType))
-		{
-			stp.getOnewaybtn().click();
-		}
-		
-		else if ("Round-Trip".equalsIgnoreCase(tripType) || "RoundTrip".equalsIgnoreCase(tripType))
-		{
-			stp.getRoundtripbtn().click();
-		}
-		else {
-			Reporter.log("Invalid Trip Type",true);
-		}
-	}
-	
-	public void selectRepeats(String n)
-	{
-		if(Integer.parseInt(n)>0)
-		{
-			stp.getRepeatcheckbox().click();
-		}
-	}
-	
-	public void selectPickuploc()
-	{
-		stp.getPickupbtn().click();
-		if(stp.getNoresidencemsg().isDisplayed())
-		{
-			Reporter.log("No pickup locations are available in Residence Tab");			
-		}
-		else 
-		{
-			stp.getselectlocation().click();
-			Reporter.log("Pickup location selected");
-		}
-	}
-	
-	public void selectDroploc()
-	{
-		stp.getDropbtn().click();
-		stp.getFacilitytab().click();
-		if(stp.getNoresidencemsg().isDisplayed())
-		{
-			Reporter.log("No drop locations are available in Facility Tab");			
-		}
-		else 
-		{
-			stp.getselectlocation().click();
-			Reporter.log("Drop location selected");
-			
-		}
-	}
-	
-	
+    WebDriver driver;
+    LoginPage loginpage;
+    ScheduledTripsPage sctp;
+    SelectPatientPage spp;
+    SetupTripPage stp;
+    PatientNeedsPage pnp;
+    TripPaymentPage tpp;
+    ReviewPage rp;
+    
+    public SetupTripFeature (WebDriver driver)
+    {
+        this.driver = driver;
+        spp = new SelectPatientPage(driver) ;
+        stp = new SetupTripPage(driver);
+    }
+    
+    public void selectTripType(String tripType)
+    {
+        if("One-Way".equalsIgnoreCase(tripType) || "OneWay".equalsIgnoreCase(tripType))
+        {
+            stp.getOnewaybtn().click();
+        }
+        
+        else if ("Round-Trip".equalsIgnoreCase(tripType) || "RoundTrip".equalsIgnoreCase(tripType))
+        {
+            stp.getRoundtripbtn().click();
+        }
+        else {
+            Reporter.log("Invalid Trip Type",true);
+        }
+    }
+    
+    public void selectRepeats(String n)
+    {
+        if(Integer.parseInt(n)>0)
+        {
+            stp.getRepeatcheckbox().click();
+        }
+    }
+    
+    public void selectPickuploc()
+    {
+        stp.getPickupbtn().click();
+        if(stp.getNoresidencemsg().isDisplayed())
+        {
+            Reporter.log("No pickup locations are available in Residence Tab");			
+        }
+        else 
+        {
+            stp.getselectlocation().click();
+            Reporter.log("Pickup location selected");
+        }
+    }
+    
+    public void selectDroploc()
+    {
+        stp.getDropbtn().click();
+        stp.getFacilitytab().click();
+        if(stp.getNoresidencemsg().isDisplayed())
+        {
+            Reporter.log("No drop locations are available in Facility Tab");			
+        }
+        else 
+        {
+            stp.getselectlocation().click();
+            Reporter.log("Drop location selected");
+            
+        }
+    }
+    
+    
 }
