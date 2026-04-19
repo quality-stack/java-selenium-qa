@@ -26,7 +26,7 @@ public class ScheduledTripFeature
     
     public void BookTrip()
     {
-        stp.getBooktripbtn().click();
+        stp.openBookTrip();
         String exptitle = "Select Patient | RoundTrip";
         String acttitle = driver.getTitle();
         Assert.assertEquals(exptitle, acttitle);

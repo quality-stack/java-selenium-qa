@@ -8,6 +8,7 @@ import com.rideroundtrip.features.SelectPatientsFeature;
 import com.rideroundtrip.features.SetupTripFeature;
 import com.rideroundtrip.generic.AuthenticatedTest;
 import com.rideroundtrip.generic.TestDataFactory;
+import com.rideroundtrip.generic.ValidationOutcome;
 
 public class BookTripTest extends AuthenticatedTest
 {
@@ -28,7 +29,7 @@ public class BookTripTest extends AuthenticatedTest
         PatientNeedsFeature patientNeedsFeature = new PatientNeedsFeature(driver);
 
         patientFeature.search(patientName);
-        patientFeature.verifysearch(1);
+        patientFeature.verifySearch(ValidationOutcome.VALID);
         setupTripFeature.selectTripType(tripType);
         setupTripFeature.selectRepeats(repeats);
         patientNeedsFeature.selectVehicleType(transportType);

@@ -3,6 +3,8 @@ package com.rideroundtrip.generic;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Reporter;
 import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
@@ -12,6 +14,7 @@ import org.testng.annotations.Parameters;
 
 public class baseLibrary
 {
+    private static final Logger LOGGER = LoggerFactory.getLogger(baseLibrary.class);
     private static final ThreadLocal<WebDriver> DRIVER = new ThreadLocal<WebDriver>();
 
     protected WebDriver driver;
@@ -28,12 +31,14 @@ public class baseLibrary
         String session = config.resolve("session.type", type, "normal");
         String appUrl = config.resolve("app.url", url, "");
 
+        LOGGER.info("Opening browser={} session={}", browser, session);
         driver = browserFactory.openBrowser(browser, session);
         DRIVER.set(driver);
 
-        driver.manage().timeouts().implicitlyWait(config.getLong("timeouts.implicit.seconds", 30), TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 
         if (!appUrl.isEmpty()) {
+            LOGGER.info("Navigating to {}", appUrl);
             driver.get(appUrl);
         }
     }
@@ -44,6 +49,7 @@ public class baseLibrary
         WebDriver currentDriver = DRIVER.get();
         try {
             if (currentDriver != null) {
+                LOGGER.info("Closing browser for thread");
                 currentDriver.quit();
                 Reporter.log("Browser closed", true);
             }
@@ -68,4 +74,3 @@ public class baseLibrary
         }
     }
 }
-

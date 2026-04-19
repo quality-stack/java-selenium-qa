@@ -1,48 +1,48 @@
 package com.rideroundtrip.features;
 
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.Reporter;
 
+import com.rideroundtrip.generic.FrameworkConfig;
+import com.rideroundtrip.generic.ValidationOutcome;
 import com.rideroundtrip.pageobjects.LoginPage;
-import com.rideroundtrip.pageobjects.ScheduledTripsPage;;
 
-public class LoginFeature 
+public class LoginFeature
 {
-    WebDriver driver;
-    LoginPage loginpage;
-    ScheduledTripsPage sp;
-    
-    public LoginFeature(WebDriver driver) 
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginFeature.class);
+
+    private final WebDriver driver;
+    private final LoginPage loginpage;
+
+    public LoginFeature(WebDriver driver)
     {
-        this.driver= driver;
-        loginpage = new LoginPage(driver);
-        sp = new ScheduledTripsPage(driver);
+        this.driver = driver;
+        this.loginpage = new LoginPage(driver);
     }
 
-    public void login(String username, String password) 
+    public void login(String username, String password)
     {
-        loginpage.getEmailTextBox().sendKeys(username);
-        loginpage.getNextbtn().click();
-        loginpage.getPwdTextBox().sendKeys(password);
-        loginpage.getSigninbtn().click();
+        LOGGER.info("Executing login flow for configured user type");
+        loginpage.login(username, password);
     }
-    
-    public void verifylogin(int tc)
+
+    public void verifyLogin(ValidationOutcome outcome)
     {
-        if(tc==1)
-        {
-            String exptitle = com.rideroundtrip.generic.FrameworkConfig.getInstance()
+        if (ValidationOutcome.VALID == outcome) {
+            String expectedTitle = FrameworkConfig.getInstance()
                     .resolve("app.expectedTitle", "", "Scheduled Trips | RoundTrip");
-            String acttitle = driver.getTitle();
-            Assert.assertEquals(exptitle, acttitle);
-            Reporter.log("valid login verified",true);
+            String actualTitle = driver.getTitle();
+            Assert.assertEquals(actualTitle, expectedTitle, "Unexpected page title after valid login");
+            LOGGER.info("Valid login verified with title {}", actualTitle);
+            Reporter.log("valid login verified", true);
+            return;
         }
-        if (tc==2) 
-        {
-            Assert.assertTrue(loginpage.getInvalidmsg().isDisplayed());
-            Reporter.log("invalid login verified",true);
-        }
-        
+
+        Assert.assertTrue(loginpage.isInvalidMessageDisplayed(), "Expected invalid login message to be displayed");
+        LOGGER.info("Invalid login verified");
+        Reporter.log("invalid login verified", true);
     }
 }

@@ -14,12 +14,12 @@ public final class TestDataFactory
             {
                 CONFIG.get("app.username"),
                 CONFIG.get("app.password"),
-                Integer.valueOf(1)
+                ValidationOutcome.VALID
             },
             {
                 CONFIG.get("invalid.username"),
                 CONFIG.get("invalid.password"),
-                Integer.valueOf(2)
+                ValidationOutcome.INVALID
             }
         };
     }
@@ -29,11 +29,11 @@ public final class TestDataFactory
         return new Object[][] {
             {
                 CONFIG.get("patients.valid.name"),
-                Integer.valueOf(1)
+                ValidationOutcome.VALID
             },
             {
                 CONFIG.get("patients.invalid.name"),
-                Integer.valueOf(2)
+                ValidationOutcome.INVALID
             }
         };
     }
@@ -51,4 +51,3 @@ public final class TestDataFactory
         };
     }
 }
-

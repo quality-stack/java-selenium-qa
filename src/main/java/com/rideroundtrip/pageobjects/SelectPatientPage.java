@@ -3,39 +3,43 @@ package com.rideroundtrip.pageobjects;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-import lombok.Getter;
-
-public class SelectPatientPage 
+public class SelectPatientPage extends BasePage
 {
-    @FindBy(xpath ="//input[@id='patient-search']")
-    private @Getter  WebElement searchTextBox;
-    @FindBy(linkText ="Add Patient")
-    private @Getter  WebElement addPatientBtn;
-    @FindBy (xpath = "/html[1]/body[1]/div[1]/div[1]/div[2]/form[1]/div[1]/div[1]/div[1]/div[3]")
-    private @Getter WebElement searchResult;
-    @FindBy (xpath = "//p[@class='empty-state-message']")
-    private @Getter WebElement emptyresultmsg;
+    @FindBy(xpath = "//input[@id='patient-search']")
+    private WebElement searchTextBox;
 
-    public SelectPatientPage(WebDriver driver) 
+    @FindBy(linkText = "Add Patient")
+    private WebElement addPatientBtn;
+
+    @FindBy(xpath = "/html[1]/body[1]/div[1]/div[1]/div[2]/form[1]/div[1]/div[1]/div[1]/div[3]")
+    private WebElement searchResult;
+
+    @FindBy(xpath = "//p[@class='empty-state-message']")
+    private WebElement emptyresultmsg;
+
+    public SelectPatientPage(WebDriver driver)
     {
-        PageFactory.initElements(driver,this);
+        super(driver);
     }
 
-    public WebElement getSearchTextBox()
+    public void searchForPatient(String patientName)
     {
-        return searchTextBox;
+        type(searchTextBox, patientName, "patient search text box");
     }
 
-    public WebElement getEmptyresultmsg()
+    public boolean hasSearchResult()
     {
-        return emptyresultmsg;
+        return isDisplayed(searchResult, "patient search result");
     }
 
-    public WebElement getSearchResult()
+    public void openSearchResult()
     {
-        return searchResult;
+        click(searchResult, "patient search result");
     }
-    
+
+    public boolean hasEmptyResultMessage()
+    {
+        return isDisplayed(emptyresultmsg, "empty patient search message");
+    }
 }

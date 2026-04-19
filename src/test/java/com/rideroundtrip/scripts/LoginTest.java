@@ -5,28 +5,28 @@ import org.testng.annotations.Test;
 
 import com.rideroundtrip.features.LoginFeature;
 import com.rideroundtrip.generic.TestDataFactory;
+import com.rideroundtrip.generic.ValidationOutcome;
 import com.rideroundtrip.generic.baseLibrary;
 
 public class LoginTest extends baseLibrary
 {
-  @DataProvider(name = "loginData")
-  public Object[][] loginData()
-  {
-      return TestDataFactory.loginData();
-  }
+    @DataProvider(name = "loginData")
+    public Object[][] loginData()
+    {
+        return TestDataFactory.loginData();
+    }
 
-  @Test(dataProvider = "loginData")
-  public void loginScenarios(String username, String password, Integer validationType)
-  {
-      if (validationType.intValue() == 1) {
-          requireConfig("app.url", "app.username", "app.password", "app.expectedTitle");
-      } else {
-          requireConfig("app.url", "invalid.username", "invalid.password");
-      }
+    @Test(dataProvider = "loginData")
+    public void loginScenarios(String username, String password, ValidationOutcome outcome)
+    {
+        if (ValidationOutcome.VALID == outcome) {
+            requireConfig("app.url", "app.username", "app.password", "app.expectedTitle");
+        } else {
+            requireConfig("app.url", "invalid.username", "invalid.password");
+        }
 
-      LoginFeature loginFeature = new LoginFeature(driver);
-      loginFeature.login(username, password);
-      loginFeature.verifylogin(validationType.intValue());
-  }
+        LoginFeature loginFeature = new LoginFeature(driver);
+        loginFeature.login(username, password);
+        loginFeature.verifyLogin(outcome);
+    }
 }
-

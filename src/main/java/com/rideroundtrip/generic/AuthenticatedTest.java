@@ -11,7 +11,7 @@ public abstract class AuthenticatedTest extends baseLibrary
         loginFeature.login(
                 FrameworkConfig.getInstance().get("app.username"),
                 FrameworkConfig.getInstance().get("app.password"));
-        loginFeature.verifylogin(1);
+        loginFeature.verifyLogin(ValidationOutcome.VALID);
     }
 }
 

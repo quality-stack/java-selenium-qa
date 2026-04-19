@@ -10,10 +10,14 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Reporter;
 
 public class browserFactory
 {
+    private static final Logger LOGGER = LoggerFactory.getLogger(browserFactory.class);
+
     private browserFactory()
     {
     }
@@ -30,16 +34,19 @@ public class browserFactory
             case "edge":
                 configureDriverBinary("webdriver.edge.driver", "driver.edge.path", "edge");
                 driver = new EdgeDriver();
+                LOGGER.info("Edge launched");
                 Reporter.log("Edge launched", true);
                 break;
             case "firefox":
                 configureDriverBinary("webdriver.gecko.driver", "driver.firefox.path", "firefox");
                 driver = new FirefoxDriver();
+                LOGGER.info("Firefox launched");
                 Reporter.log("Firefox launched", true);
                 break;
             case "ie":
                 configureDriverBinary("webdriver.ie.driver", "driver.ie.path", "ie");
                 driver = new InternetExplorerDriver();
+                LOGGER.info("Internet Explorer launched");
                 Reporter.log("Internet Explorer launched", true);
                 break;
             case "chrome":
@@ -55,13 +62,13 @@ public class browserFactory
                 }
                 options.addArguments("--start-maximized");
                 driver = new ChromeDriver(options);
+                LOGGER.info("Chrome launched");
                 Reporter.log("Chrome launched", true);
                 break;
         }
 
         driver.manage().deleteAllCookies();
         driver.manage().timeouts().pageLoadTimeout(config.getLong("timeouts.pageLoad.seconds", 20), TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(config.getLong("timeouts.implicit.seconds", 30), TimeUnit.SECONDS);
         driver.manage().timeouts().setScriptTimeout(config.getLong("timeouts.script.seconds", 60), TimeUnit.SECONDS);
         return driver;
     }
@@ -71,6 +78,7 @@ public class browserFactory
         String configuredDriverPath = FrameworkConfig.getInstance().get(configKey);
         if (!configuredDriverPath.isEmpty()) {
             System.setProperty(systemPropertyName, configuredDriverPath);
+            LOGGER.info("Using configured driver path for {}", browser);
             Reporter.log("Using configured driver path for " + browser, true);
             return;
         }
@@ -85,22 +93,25 @@ public class browserFactory
         switch (browser) {
             case "edge":
                 WebDriverManager.edgedriver().setup();
+                LOGGER.info("Resolved EdgeDriver automatically");
                 Reporter.log("Resolved EdgeDriver automatically", true);
                 break;
             case "firefox":
                 WebDriverManager.firefoxdriver().setup();
+                LOGGER.info("Resolved GeckoDriver automatically");
                 Reporter.log("Resolved GeckoDriver automatically", true);
                 break;
             case "ie":
                 WebDriverManager.iedriver().setup();
+                LOGGER.info("Resolved IEDriver automatically");
                 Reporter.log("Resolved IEDriver automatically", true);
                 break;
             case "chrome":
             default:
                 WebDriverManager.chromedriver().setup();
+                LOGGER.info("Resolved ChromeDriver automatically");
                 Reporter.log("Resolved ChromeDriver automatically", true);
                 break;
         }
     }
 }
-
