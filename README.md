@@ -11,6 +11,7 @@ Reusable Java Selenium/TestNG framework with central configuration, data-driven 
 - Added a reusable authenticated test base for application-specific flows.
 - Fixed obvious framework bugs such as broken RedBus locators, string comparison with `==`, and unsafe screenshot handling.
 - Added Allure reporting with TestNG integration and screenshot attachments on failure.
+- Added automatic browser-driver management so local ChromeDriver binaries are no longer required by default.
 
 ## Default execution
 
@@ -108,6 +109,8 @@ For app-specific flows like login, patient search, and trip booking, set the rel
 
 ## Notes
 
-- Browser driver paths are optional and can be set with properties such as `driver.chrome.path`.
+- Browser drivers are auto-managed by default using WebDriverManager, which resolves a compatible driver version at runtime.
+- If you want to force a specific local binary instead, set `driver.chrome.path`, `driver.edge.path`, `driver.firefox.path`, or `driver.ie.path`.
+- You can disable auto-management with `driver.auto.manage=false`.
 - If required app-specific values are missing, those tests are skipped instead of failing for configuration reasons.
 

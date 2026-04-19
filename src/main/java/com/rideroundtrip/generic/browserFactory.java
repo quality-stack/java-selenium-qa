@@ -2,6 +2,8 @@ package com.rideroundtrip.generic;
 
 import java.util.concurrent.TimeUnit;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -26,23 +28,23 @@ public class browserFactory
 
         switch (normalizedBrowser) {
             case "edge":
-                setDriverExecutableIfConfigured("webdriver.edge.driver", "driver.edge.path");
+                configureDriverBinary("webdriver.edge.driver", "driver.edge.path", "edge");
                 driver = new EdgeDriver();
                 Reporter.log("Edge launched", true);
                 break;
             case "firefox":
-                setDriverExecutableIfConfigured("webdriver.gecko.driver", "driver.firefox.path");
+                configureDriverBinary("webdriver.gecko.driver", "driver.firefox.path", "firefox");
                 driver = new FirefoxDriver();
                 Reporter.log("Firefox launched", true);
                 break;
             case "ie":
-                setDriverExecutableIfConfigured("webdriver.ie.driver", "driver.ie.path");
+                configureDriverBinary("webdriver.ie.driver", "driver.ie.path", "ie");
                 driver = new InternetExplorerDriver();
                 Reporter.log("Internet Explorer launched", true);
                 break;
             case "chrome":
             default:
-                setDriverExecutableIfConfigured("webdriver.chrome.driver", "driver.chrome.path");
+                configureDriverBinary("webdriver.chrome.driver", "driver.chrome.path", "chrome");
                 ChromeOptions options = new ChromeOptions();
                 if ("incognito".equals(normalizedSession)) {
                     options.addArguments("--incognito");
@@ -64,11 +66,40 @@ public class browserFactory
         return driver;
     }
 
-    private static void setDriverExecutableIfConfigured(String systemPropertyName, String configKey)
+    private static void configureDriverBinary(String systemPropertyName, String configKey, String browser)
     {
         String configuredDriverPath = FrameworkConfig.getInstance().get(configKey);
         if (!configuredDriverPath.isEmpty()) {
             System.setProperty(systemPropertyName, configuredDriverPath);
+            Reporter.log("Using configured driver path for " + browser, true);
+            return;
+        }
+
+        if (FrameworkConfig.getInstance().getBoolean("driver.auto.manage", true)) {
+            setupManagedDriver(browser);
+        }
+    }
+
+    private static void setupManagedDriver(String browser)
+    {
+        switch (browser) {
+            case "edge":
+                WebDriverManager.edgedriver().setup();
+                Reporter.log("Resolved EdgeDriver automatically", true);
+                break;
+            case "firefox":
+                WebDriverManager.firefoxdriver().setup();
+                Reporter.log("Resolved GeckoDriver automatically", true);
+                break;
+            case "ie":
+                WebDriverManager.iedriver().setup();
+                Reporter.log("Resolved IEDriver automatically", true);
+                break;
+            case "chrome":
+            default:
+                WebDriverManager.chromedriver().setup();
+                Reporter.log("Resolved ChromeDriver automatically", true);
+                break;
         }
     }
 }
