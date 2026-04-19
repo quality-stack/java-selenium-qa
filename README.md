@@ -73,7 +73,7 @@ The email includes:
 - passed, failed, skipped, and total counts
 - the TestNG `emailable-report.html` as an attachment when available
 - a zipped generated Allure report artifact
-- a zipped Allure raw results artifact
+- a zipped Allure raw results artifact only when `smtp.attach.raw.allure.results=true`
 
 If tests fail, the email step still runs first and the Maven build fails afterward so CI still gets the correct failed status.
 

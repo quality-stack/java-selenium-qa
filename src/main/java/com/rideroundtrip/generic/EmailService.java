@@ -130,7 +130,9 @@ public class EmailService
         builder.append("<ul>");
         builder.append("<li>TestNG emailable report</li>");
         builder.append("<li>Generated Allure report archive</li>");
-        builder.append("<li>Allure raw results archive</li>");
+        if (config.getBoolean("smtp.attach.raw.allure.results", false)) {
+            builder.append("<li>Allure raw results archive</li>");
+        }
         builder.append("</ul>");
         builder.append("</body></html>");
         bodyPart.setContent(builder.toString(), "text/html; charset=UTF-8");

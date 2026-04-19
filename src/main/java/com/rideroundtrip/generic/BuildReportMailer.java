@@ -40,10 +40,12 @@ public class BuildReportMailer
             attachments.add(zippedAllureReport);
         }
 
-        File allureResultsDirectory = new File(config.resolve("allure.results.directory", "", "./target/allure-results"));
-        File zippedAllureResults = zipIfPresent(allureResultsDirectory, "allure-results.zip");
-        if (zippedAllureResults != null) {
-            attachments.add(zippedAllureResults);
+        if (config.getBoolean("smtp.attach.raw.allure.results", false)) {
+            File allureResultsDirectory = new File(config.resolve("allure.results.directory", "", "./target/allure-results"));
+            File zippedAllureResults = zipIfPresent(allureResultsDirectory, "allure-results.zip");
+            if (zippedAllureResults != null) {
+                attachments.add(zippedAllureResults);
+            }
         }
 
         new EmailService().sendSummary(summary, attachments);
