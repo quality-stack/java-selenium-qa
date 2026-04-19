@@ -1,13 +1,15 @@
 package com.rideroundtrip.generic;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Objects;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.testng.Reporter;
@@ -34,11 +36,17 @@ public class excelUtility
 	public String readData(String sheetName, int row, int cell)
 	{
 		String value = null;
-		try 
+		try (FileInputStream fin = new FileInputStream(filepath);
+			 Workbook wb = WorkbookFactory.create(fin))
 		{
-			FileInputStream fin = new FileInputStream(filepath);
-			Workbook wb = WorkbookFactory.create(fin);
-			Cell cl = wb.getSheet(sheetName).getRow(row).getCell(cell);
+			Sheet sheet = wb.getSheet(sheetName);
+			Row selectedRow = sheet == null ? null : sheet.getRow(row);
+			Cell cl = selectedRow == null ? null : selectedRow.getCell(cell);
+			if (Objects.isNull(cl))
+			{
+				Reporter.log("Unable to read data from sheet=" + sheetName + ", row=" + row + ", cell=" + cell, true);
+				return "";
+			}
 			
 			switch(cl.getCellType())
 			{
@@ -51,7 +59,7 @@ public class excelUtility
 				{
 					if(DateUtil.isCellDateFormatted(cl)) 
 					{
-						SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yy");
+						SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
 						value = sdf.format(cl.getDateCellValue());
 					}
 					else 
@@ -72,12 +80,12 @@ public class excelUtility
 					Reporter.log("Cell format is not matching");
 				}
 		}
-	}
+		}
 		catch(EncryptedDocumentException | IOException e)
 		{
-			e.printStackTrace();
+			throw new IllegalStateException("Unable to read Excel data from " + filepath, e);
 		}
-		return value;
+		return value == null ? "" : value;
 		
 	}
 

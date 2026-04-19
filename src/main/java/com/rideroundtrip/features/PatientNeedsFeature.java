@@ -33,7 +33,7 @@ public class PatientNeedsFeature
 	public void selectVehicleType(String vehicleType)
 	{
 		Select tripreason = new Select(pnp.getdrptripreason());
-		if(vehicleType == "Lyft") 
+		if("Lyft".equalsIgnoreCase(vehicleType)) 
 		{
 			pnp.getAmbulatory_vehicle().click();
 			pnp.getlyft_ride().click();
@@ -43,17 +43,17 @@ public class PatientNeedsFeature
 //			pnp.get
 		}
 		
-		if(vehicleType == "Medical Sedan")
+		if("Medical Sedan".equalsIgnoreCase(vehicleType))
 		{
 			
 		}
 		
-		if(vehicleType == "Wheelchair")
+		if("Wheelchair".equalsIgnoreCase(vehicleType))
 		{
 			
 		}
 		
-		if(vehicleType == "Stretcher")
+		if("Stretcher".equalsIgnoreCase(vehicleType))
 		{
 			
 		}

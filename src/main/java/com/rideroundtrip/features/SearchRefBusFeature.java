@@ -13,26 +13,25 @@ public class SearchRefBusFeature {
 		redbusPage = new RedbusPage(driver);
 	}
 	
-	public void enterSource() {
+	public void enterSource(String source) {
 		redbusPage.getFrom().isDisplayed();
 		redbusPage.getFrom().click();
 		redbusPage.getFrom().clear();
-		redbusPage.getFrom().sendKeys("Delhi");	
+		redbusPage.getFrom().sendKeys(source);	
 		System.out.println("Source Entered");
 	}
 	
-	public void selectSource() throws InterruptedException {
+	public void selectSource() {
 		redbusPage.getSelectFirst().isDisplayed();
 		redbusPage.getSelectFirst().click();
-		System.out.println("Source Selected");	
-		Thread.sleep(3000);
+		System.out.println("Source Selected");
 	}
 	
-	public void enterDestination() {
-//		redbusPage.getTo().isDisplayed();
-//		redbusPage.getTo().click();
-//		redbusPage.getTo().clear();
-		redbusPage.getTo().sendKeys("Manali");
+	public void enterDestination(String destination) {
+		redbusPage.getTo().isDisplayed();
+		redbusPage.getTo().click();
+		redbusPage.getTo().clear();
+		redbusPage.getTo().sendKeys(destination);
 		System.out.println("Destination Entered");
 	}
 	

@@ -32,7 +32,8 @@ public class LoginFeature
 	{
 		if(tc==1)
 		{
-			String exptitle = "Scheduled Trips | RoundTrip";
+			String exptitle = com.rideroundtrip.generic.FrameworkConfig.getInstance()
+					.resolve("app.expectedTitle", "", "Scheduled Trips | RoundTrip");
 			String acttitle = driver.getTitle();
 			Assert.assertEquals(exptitle, acttitle);
 			Reporter.log("valid login verified",true);

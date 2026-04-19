@@ -36,9 +36,16 @@ public class testngListner implements ITestListener
 		failcount++;
 		Reporter.log(result.getName()+" script is failed",true);
 		
-		TakesScreenshot ts = (TakesScreenshot) baseLibrary.driver;
+		if (!(baseLibrary.getDriver() instanceof TakesScreenshot)) {
+			return;
+		}
+		TakesScreenshot ts = (TakesScreenshot) baseLibrary.getDriver();
 		File srcFile = ts.getScreenshotAs(OutputType.FILE);
-		File destFile = new File("./screenshots"+result.getName()+".png");
+		File screenshotDirectory = new File("./screenshots");
+		if (!screenshotDirectory.exists()) {
+			screenshotDirectory.mkdirs();
+		}
+		File destFile = new File(screenshotDirectory, result.getName()+".png");
 		try 
 		{
 			Files.copy(srcFile,destFile);

@@ -31,12 +31,12 @@ public class SetupTripFeature
 	
 	public void selectTripType(String tripType)
 	{
-		if(tripType == "One-Way")
+		if("One-Way".equalsIgnoreCase(tripType) || "OneWay".equalsIgnoreCase(tripType))
 		{
 			stp.getOnewaybtn().click();
 		}
 		
-		else if (tripType == "Round-Trip")
+		else if ("Round-Trip".equalsIgnoreCase(tripType) || "RoundTrip".equalsIgnoreCase(tripType))
 		{
 			stp.getRoundtripbtn().click();
 		}

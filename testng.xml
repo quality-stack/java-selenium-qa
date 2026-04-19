@@ -5,7 +5,7 @@
 <listener class-name="com.rideroundtrip.generic.testngListner"/>
 </listeners>
 
-  <test name="New Test">
+  <test name="Public Search Flows">
   <parameter name="browsername" value ="chrome"/>
   <parameter name="type" value ="normal"/>
   <parameter name="url" value ="https://www.redbus.in/"/>

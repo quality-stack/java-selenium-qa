@@ -1,43 +1,32 @@
 package com.rideroundtrip.scripts;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import com.rideroundtrip.features.LoginFeature;
 import com.rideroundtrip.features.SelectPatientsFeature;
-import com.rideroundtrip.generic.baseLibrary;
-import com.rideroundtrip.generic.excelUtility;
+import com.rideroundtrip.generic.AuthenticatedTest;
+import com.rideroundtrip.generic.TestDataFactory;
 
-public class SearchPatientTest extends baseLibrary
+public class SearchPatientTest extends AuthenticatedTest
 {
-  @Test (priority=1)
-  public void validSearch()
+  @DataProvider(name = "patientData")
+  public Object[][] patientData()
   {
-	  excelUtility eu = new excelUtility("./testdata/testdataRT.xlsx");
-	  String username = eu.readData("Login", 1, 1);
-	  String password = eu.readData("Login", 1, 2);
-	  LoginFeature lf = new LoginFeature(driver);
-	  lf.login(username, password);
-	  lf.verifylogin(1);
-	  
-	  String patinetName = eu.readData("Patients", 1, 1);
-	  SelectPatientsFeature spf = new SelectPatientsFeature(driver);
-	  spf.search(patinetName);
-	  spf.verifysearch(1);
+      return TestDataFactory.patientSearchData();
   }
-  
-  @Test (priority=2)
-  public void invalidSearch()
+
+  @Test(dataProvider = "patientData")
+  public void searchPatientScenarios(String patientName, Integer validationType)
   {
-	  excelUtility eu = new excelUtility("./testdata/testdataRT.xlsx");
-	  String username = eu.readData("Login", 1, 1);
-	  String password = eu.readData("Login", 1, 2);
-	  LoginFeature lf = new LoginFeature(driver);
-	  lf.login(username, password);
-	  lf.verifylogin(1);
-	  
-	  String patinetName = eu.readData("Patients", 2, 1);
-	  SelectPatientsFeature spf = new SelectPatientsFeature(driver);
-	  spf.search(patinetName);
-	  spf.verifysearch(2);
+      if (validationType.intValue() == 1) {
+          requireConfig("patients.valid.name");
+      } else {
+          requireConfig("patients.invalid.name");
+      }
+      loginWithConfiguredUser();
+
+      SelectPatientsFeature patientFeature = new SelectPatientsFeature(driver);
+      patientFeature.search(patientName);
+      patientFeature.verifysearch(validationType.intValue());
   }
 }

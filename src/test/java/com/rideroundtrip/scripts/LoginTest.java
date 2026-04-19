@@ -1,36 +1,31 @@
 package com.rideroundtrip.scripts;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.rideroundtrip.features.LoginFeature;
+import com.rideroundtrip.generic.TestDataFactory;
 import com.rideroundtrip.generic.baseLibrary;
-import com.rideroundtrip.generic.excelUtility;
 
 public class LoginTest extends baseLibrary
 {
-  @Test (priority=1)
-  public void validLogin()  
+  @DataProvider(name = "loginData")
+  public Object[][] loginData()
   {
-	  excelUtility eu = new excelUtility("./testdata/testdataRT.xlsx");
-//	  String username = "cc@rideroundtrip.com";
-//	  String password = "RoundTrip1";
-	  String username = eu.readData("Login", 1, 1);
-	  String password = eu.readData("Login", 1, 2);
-	  
-	  LoginFeature lf = new LoginFeature(driver);
-	  lf.login(username, password);
-	  lf.verifylogin(1);
+      return TestDataFactory.loginData();
   }
-  
-  @Test (priority=2)
-  public void invalidLogin()
+
+  @Test(dataProvider = "loginData")
+  public void loginScenarios(String username, String password, Integer validationType)
   {
-	  excelUtility eu = new excelUtility("./testdata/testdataRT.xlsx");
-	  String username = eu.readData("Login", 2, 1);
-	  String password = eu.readData("Login", 2, 2);
-	  
-	  LoginFeature lf = new LoginFeature(driver);
-	  lf.login(username, password);
-	  lf.verifylogin(2);
+      if (validationType.intValue() == 1) {
+          requireConfig("app.url", "app.username", "app.password", "app.expectedTitle");
+      } else {
+          requireConfig("app.url", "invalid.username", "invalid.password");
+      }
+
+      LoginFeature loginFeature = new LoginFeature(driver);
+      loginFeature.login(username, password);
+      loginFeature.verifylogin(validationType.intValue());
   }
 }
