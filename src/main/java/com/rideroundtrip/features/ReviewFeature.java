@@ -10,8 +10,12 @@ import com.rideroundtrip.pageobjects.SelectPatientPage;
 import com.rideroundtrip.pageobjects.SetupTripPage;
 import com.rideroundtrip.pageobjects.TripPaymentPage;
 
+/**
+ * Placeholder feature layer for the final booking-review step.
+ */
 public class ReviewFeature 
 {
+    /** Driver shared by the review flow. */
     WebDriver driver;
     LoginPage loginpage;
     ScheduledTripsPage sctp;
@@ -21,6 +25,9 @@ public class ReviewFeature
     TripPaymentPage tpp;
     ReviewPage rp;
     
+    /**
+     * Creates the feature layer for review-step interactions.
+     */
     public ReviewFeature (WebDriver driver)
     {
         this.driver = driver;

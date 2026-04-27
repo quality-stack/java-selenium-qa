@@ -14,24 +14,22 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.testng.Reporter;
 /**
- * 
- * @author sagar
- * created on 07/07/2019 at 12:10pm
+ * Reads typed cell values from an Excel workbook used by the framework's test data layer.
  */
 public class excelUtility
 {
+    /** Absolute or relative path to the workbook file on disk. */
     String filepath;
     
+    /**
+     * Creates a reader bound to the supplied workbook path.
+     */
     public excelUtility(String filepath)
     {
         this.filepath = filepath;
     }
     /**
-     * @author sagar
-     * @param sheetName
-     * @param row
-     * @param cell
-     * @return
+     * Reads a single cell value from the requested sheet, row, and column index.
      */
     public String readData(String sheetName, int row, int cell)
     {

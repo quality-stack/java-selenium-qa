@@ -4,23 +4,36 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * Resolves framework configuration from system properties, environment variables, and defaults.
+ */
 public final class FrameworkConfig
 {
+    /** Classpath resource containing default framework settings. */
     private static final String FRAMEWORK_PROPERTIES = "framework.properties";
+    /** Singleton instance reused across the framework. */
     private static final FrameworkConfig INSTANCE = new FrameworkConfig();
 
+    /** Holds the properties loaded from the framework resource file. */
     private final Properties properties = new Properties();
 
+    /** Loads the configuration file once when the singleton is created. */
     private FrameworkConfig()
     {
         loadProperties();
     }
 
+    /**
+     * Returns the shared configuration accessor.
+     */
     public static FrameworkConfig getInstance()
     {
         return INSTANCE;
     }
 
+    /**
+     * Reads a configuration value with system properties and environment variables taking precedence.
+     */
     public String get(String key)
     {
         String systemValue = System.getProperty(key);
@@ -37,6 +50,9 @@ public final class FrameworkConfig
         return properties.getProperty(key, "").trim();
     }
 
+    /**
+     * Resolves a value from a TestNG parameter first, then from configuration, then from a fallback.
+     */
     public String resolve(String key, String parameterValue, String defaultValue)
     {
         if (isPresent(parameterValue)) {
@@ -51,6 +67,9 @@ public final class FrameworkConfig
         return defaultValue == null ? "" : defaultValue.trim();
     }
 
+    /**
+     * Parses a long configuration value while falling back safely when parsing fails.
+     */
     public long getLong(String key, long defaultValue)
     {
         String value = get(key);
@@ -65,6 +84,9 @@ public final class FrameworkConfig
         }
     }
 
+    /**
+     * Parses a boolean configuration value while falling back safely when absent.
+     */
     public boolean getBoolean(String key, boolean defaultValue)
     {
         String value = get(key);
@@ -75,6 +97,9 @@ public final class FrameworkConfig
         return Boolean.parseBoolean(value);
     }
 
+    /**
+     * Loads the framework property file from the test runtime classpath.
+     */
     private void loadProperties()
     {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -91,6 +116,9 @@ public final class FrameworkConfig
         }
     }
 
+    /**
+     * Checks whether a candidate string contains a usable non-blank value.
+     */
     private boolean isPresent(String value)
     {
         return value != null && !value.trim().isEmpty();

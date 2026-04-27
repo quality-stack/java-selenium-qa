@@ -15,12 +15,21 @@ import org.slf4j.LoggerFactory;
 
 import com.rideroundtrip.generic.FrameworkConfig;
 
+/**
+ * Base page object that standardizes waits and low-level UI interactions.
+ */
 public abstract class BasePage
 {
+    /** Active driver used by the page object. */
     protected final WebDriver driver;
+    /** Shared explicit-wait helper for stable element synchronization. */
     protected final WebDriverWait wait;
+    /** Page-specific logger used by interaction helpers. */
     protected final Logger logger;
 
+    /**
+     * Wires the driver, wait helper, and PageFactory bindings for a page object.
+     */
     protected BasePage(WebDriver driver)
     {
         this.driver = driver;
@@ -29,22 +38,34 @@ public abstract class BasePage
         PageFactory.initElements(driver, this);
     }
 
+    /**
+     * Clicks an element using the default interaction label.
+     */
     protected void click(WebElement element)
     {
         click(element, "element");
     }
 
+    /**
+     * Clicks an element after it becomes clickable.
+     */
     protected void click(WebElement element, String elementName)
     {
         waitForClickable(element).click();
         logger.debug("Clicked {}", elementName);
     }
 
+    /**
+     * Types text into an element using the default interaction label.
+     */
     protected void type(WebElement element, String value)
     {
         type(element, value, "element");
     }
 
+    /**
+     * Clears and types into an element once it becomes visible.
+     */
     protected void type(WebElement element, String value, String elementName)
     {
         WebElement visibleElement = waitForVisible(element);
@@ -53,6 +74,9 @@ public abstract class BasePage
         logger.debug("Typed into {}", elementName);
     }
 
+    /**
+     * Reads text from a visible element and trims the resulting value.
+     */
     protected String textOf(WebElement element, String elementName)
     {
         String text = waitForVisible(element).getText().trim();
@@ -60,11 +84,17 @@ public abstract class BasePage
         return text;
     }
 
+    /**
+     * Checks whether an element is currently visible using the default label.
+     */
     protected boolean isDisplayed(WebElement element)
     {
         return isDisplayed(element, "element");
     }
 
+    /**
+     * Checks whether an element is visible without failing the test immediately.
+     */
     protected boolean isDisplayed(WebElement element, String elementName)
     {
         try {
@@ -77,12 +107,18 @@ public abstract class BasePage
         }
     }
 
+    /**
+     * Waits until the browser title matches the supplied string.
+     */
     protected void waitForTitle(String title)
     {
         wait.until(ExpectedConditions.titleIs(title));
         logger.debug("Page title matched {}", title);
     }
 
+    /**
+     * Pauses execution for a fixed duration when no better synchronization is available.
+     */
     protected void pause(long milliseconds)
     {
         try {
@@ -93,11 +129,17 @@ public abstract class BasePage
         }
     }
 
+    /**
+     * Waits until an element becomes visible.
+     */
     protected WebElement waitForVisible(WebElement element)
     {
         return wait.until(ExpectedConditions.visibilityOf(element));
     }
 
+    /**
+     * Waits until an element becomes clickable.
+     */
     protected WebElement waitForClickable(WebElement element)
     {
         return wait.until(ExpectedConditions.elementToBeClickable(element));

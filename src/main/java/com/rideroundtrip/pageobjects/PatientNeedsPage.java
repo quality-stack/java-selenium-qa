@@ -6,6 +6,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import lombok.Getter;
 
+/**
+ * Page object containing the patient-needs controls shown after trip details are selected.
+ */
 public class PatientNeedsPage
 {
     
@@ -239,6 +242,9 @@ public class PatientNeedsPage
       private @Getter  WebElement Continue_btn;
     
     
+    /**
+     * Binds the page object to the active browser session.
+     */
     public PatientNeedsPage(WebDriver driver)
     {
         PageFactory.initElements(driver,this);

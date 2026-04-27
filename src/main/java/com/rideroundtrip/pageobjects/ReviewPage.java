@@ -7,6 +7,9 @@ import org.openqa.selenium.support.PageFactory;
 
 import lombok.Getter;
 
+/**
+ * Page object for the booking-review and confirmation screen.
+ */
 public class ReviewPage
 {
     @FindBy(xpath = "/html[1]/body[1]/div[1]/form[1]/div[7]/div[1]/div[2]/div[1]/div[1]/div[2]/h2[1]")
@@ -22,6 +25,9 @@ public class ReviewPage
     @FindBy(xpath = "/html[1]/body[1]/div[1]/form[1]/div[8]/div[2]/a[1]")
     private @Getter WebElement backbtn;	
 
+    /**
+     * Binds the page object to the active browser session.
+     */
     public ReviewPage(WebDriver driver)
     {
         PageFactory.initElements(driver,this);

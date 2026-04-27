@@ -10,14 +10,23 @@ import com.rideroundtrip.generic.AuthenticatedTest;
 import com.rideroundtrip.generic.TestDataFactory;
 import com.rideroundtrip.generic.ValidationOutcome;
 
+/**
+ * Walks through the booking flow up to patient-needs selection using configured test data.
+ */
 public class BookTripTest extends AuthenticatedTest
 {
+    /**
+     * Supplies the booking test payload from the shared test-data factory.
+     */
     @DataProvider(name = "tripData")
     public Object[][] tripData()
     {
         return TestDataFactory.tripBookingData();
     }
 
+    /**
+     * Books a trip through the configured setup path for the supplied patient and transport details.
+     */
     @Test(dataProvider = "tripData")
     public void bookTrip(String patientName, String tripType, String repeats, String transportType, String payerType)
     {

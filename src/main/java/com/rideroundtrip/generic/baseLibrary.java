@@ -12,13 +12,22 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
+/**
+ * Creates and tears down a browser session around each TestNG test method.
+ */
 public class baseLibrary
 {
+    /** Writes framework lifecycle events to the configured logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(baseLibrary.class);
+    /** Keeps the active driver isolated per test thread. */
     private static final ThreadLocal<WebDriver> DRIVER = new ThreadLocal<WebDriver>();
 
+    /** Stores the driver instance used by the current test method. */
     protected WebDriver driver;
 
+    /**
+     * Opens the configured browser and navigates to the requested application URL.
+     */
     @BeforeMethod(alwaysRun = true)
     @Parameters({"browsername", "type", "url"})
     public void preconditon(
@@ -43,6 +52,9 @@ public class baseLibrary
         }
     }
 
+    /**
+     * Closes the browser after each test method and clears thread-local state.
+     */
     @AfterMethod(alwaysRun = true)
     public void postcondition()
     {
@@ -59,11 +71,17 @@ public class baseLibrary
         }
     }
 
+    /**
+     * Returns the driver associated with the current thread.
+     */
     public static WebDriver getDriver()
     {
         return DRIVER.get();
     }
 
+    /**
+     * Skips the test when a required configuration key has not been supplied.
+     */
     protected void requireConfig(String... keys)
     {
         FrameworkConfig config = FrameworkConfig.getInstance();

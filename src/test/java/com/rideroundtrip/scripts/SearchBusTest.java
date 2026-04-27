@@ -6,8 +6,14 @@ import com.rideroundtrip.features.SearchRefBusFeature;
 import com.rideroundtrip.generic.FrameworkConfig;
 import com.rideroundtrip.generic.baseLibrary;
 
+/**
+ * Exercises the public RedBus search flow using configurable route inputs.
+ */
 public class SearchBusTest extends baseLibrary
 {
+    /**
+     * Performs a bus search with the configured origin and destination values.
+     */
   @Test
   public void searchBuses()
   {

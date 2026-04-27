@@ -5,6 +5,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import lombok.Getter;
 
+/**
+ * Page object for the public RedBus search form used by the demo test flow.
+ */
 public class RedbusPage extends BasePage {
         @FindBy(xpath="//input[@data-message='Please enter a source city']")
         private @Getter  WebElement From;
@@ -16,6 +19,9 @@ public class RedbusPage extends BasePage {
         private @Getter  WebElement Cal;		
         @FindBy(id="search_btn")
         private @Getter  WebElement searchBtn;		
+        /**
+         * Binds the page object to the active browser session.
+         */
         public RedbusPage(WebDriver driver)
         {
             super(driver);

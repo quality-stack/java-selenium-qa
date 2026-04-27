@@ -7,6 +7,9 @@ import org.openqa.selenium.support.PageFactory;
 
 import lombok.Getter;
 
+/**
+ * Page object for the trip-setup form and location selectors.
+ */
 public class SetupTripPage
 {
     @FindBy(xpath ="//label[@id='one-way-label']//div[1]")
@@ -48,6 +51,9 @@ public class SetupTripPage
     @FindBy(xpath = "//a[@class='link -back']")
     private @Getter WebElement backbtn;
 
+    /**
+     * Binds the page object to the active browser session.
+     */
     public SetupTripPage(WebDriver driver)
     {
         PageFactory.initElements(driver,this);

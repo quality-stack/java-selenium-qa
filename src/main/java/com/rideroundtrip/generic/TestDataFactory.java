@@ -1,13 +1,21 @@
 package com.rideroundtrip.generic;
 
+/**
+ * Produces centralized data-provider payloads for the TestNG suites.
+ */
 public final class TestDataFactory
 {
+    /** Shared configuration source used to populate test inputs. */
     private static final FrameworkConfig CONFIG = FrameworkConfig.getInstance();
 
+    /** Prevents utility-style construction. */
     private TestDataFactory()
     {
     }
 
+    /**
+     * Returns positive and negative login scenarios for the login suite.
+     */
     public static Object[][] loginData()
     {
         return new Object[][] {
@@ -24,6 +32,9 @@ public final class TestDataFactory
         };
     }
 
+    /**
+     * Returns positive and negative patient-search scenarios for the patient suite.
+     */
     public static Object[][] patientSearchData()
     {
         return new Object[][] {
@@ -38,6 +49,9 @@ public final class TestDataFactory
         };
     }
 
+    /**
+     * Returns the configured trip-booking payload used by the booking suite.
+     */
     public static Object[][] tripBookingData()
     {
         return new Object[][] {

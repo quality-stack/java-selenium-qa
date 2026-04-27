@@ -22,21 +22,34 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Reporter;
 
+/**
+ * Sends execution-summary emails and attaches the generated test artifacts.
+ */
 public class EmailService
 {
+    /** Emits non-sensitive SMTP execution details for debugging. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
+    /** Provides SMTP and attachment configuration. */
     private final FrameworkConfig config = FrameworkConfig.getInstance();
 
+    /**
+     * Builds and sends the execution summary email for the completed run.
+     */
     public void sendSummary(BuildExecutionSummary summary, List<File> attachments)
     {
         if (!config.getBoolean("smtp.enabled", false)) {
+            LOGGER.info("Skipping SMTP summary because email notifications are disabled");
             Reporter.log("SMTP email notification disabled", true);
             return;
         }
 
         List<InternetAddress> toRecipients = parseRecipients(config.get("smtp.to"));
         if (toRecipients.isEmpty()) {
+            LOGGER.warn("Skipping SMTP summary because no recipients are configured");
             Reporter.log("Skipping SMTP email because smtp.to is not configured", true);
             return;
         }
@@ -47,11 +60,13 @@ public class EmailService
         final String smtpHost = config.get("smtp.host");
 
         if (smtpHost.isEmpty()) {
+            LOGGER.warn("Skipping SMTP summary because smtp.host is not configured");
             Reporter.log("Skipping SMTP email because smtp.host is not configured", true);
             return;
         }
 
         if (authEnabled && (username.isEmpty() || password.isEmpty())) {
+            LOGGER.warn("Skipping SMTP summary because SMTP authentication is enabled but credentials are incomplete");
             Reporter.log("Skipping SMTP email because smtp.username or smtp.password is not configured", true);
             return;
         }
@@ -79,6 +94,7 @@ public class EmailService
             MimeMessage message = new MimeMessage(session);
             String fromAddress = config.resolve("smtp.from", "", username);
             if (fromAddress.isEmpty()) {
+                LOGGER.warn("Skipping SMTP summary because no sender address is configured");
                 Reporter.log("Skipping SMTP email because smtp.from or smtp.username is not configured", true);
                 return;
             }
@@ -100,13 +116,23 @@ public class EmailService
             addAttachments(multipart, attachments);
 
             message.setContent(multipart);
+            LOGGER.info(
+                    "Sending SMTP summary for test '{}' to {} recipients with {} attachments",
+                    summary.getTestName(),
+                    Integer.valueOf(toRecipients.size()),
+                    Integer.valueOf(attachments.size()));
             Transport.send(message);
+            LOGGER.info("SMTP summary sent successfully");
             Reporter.log("SMTP execution summary sent to " + config.get("smtp.to"), true);
         } catch (MessagingException exception) {
+            LOGGER.error("Unable to send SMTP execution summary", exception);
             throw new IllegalStateException("Unable to send SMTP execution summary", exception);
         }
     }
 
+    /**
+     * Creates the HTML body that appears in the build summary email.
+     */
     private MimeBodyPart buildHtmlSummary(BuildExecutionSummary summary) throws MessagingException
     {
         MimeBodyPart bodyPart = new MimeBodyPart();
@@ -139,10 +165,14 @@ public class EmailService
         return bodyPart;
     }
 
+    /**
+     * Adds all valid report files as MIME attachments.
+     */
     private void addAttachments(MimeMultipart multipart, List<File> attachments) throws MessagingException
     {
         for (File attachmentFile : attachments) {
             if (attachmentFile == null || !attachmentFile.exists() || !attachmentFile.isFile()) {
+                LOGGER.debug("Skipping invalid attachment entry");
                 continue;
             }
 
@@ -151,9 +181,13 @@ public class EmailService
             attachment.setDataHandler(new DataHandler(source));
             attachment.setFileName(attachmentFile.getName());
             multipart.addBodyPart(attachment);
+            LOGGER.debug("Attached artifact {}", attachmentFile.getName());
         }
     }
 
+    /**
+     * Parses a comma-separated recipient list into validated email addresses.
+     */
     private List<InternetAddress> parseRecipients(String recipients)
     {
         List<InternetAddress> addresses = new ArrayList<InternetAddress>();

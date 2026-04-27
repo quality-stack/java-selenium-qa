@@ -7,6 +7,9 @@ import org.openqa.selenium.support.PageFactory;
 
 import lombok.Getter;
 
+/**
+ * Page object for payer selection and payment details.
+ */
 public class TripPaymentPage 
 {
     @FindBy(xpath ="//p[contains(text(),'You selected a Lyft for this trip. The payer type')]")
@@ -45,6 +48,9 @@ public class TripPaymentPage
     private @Getter WebElement backbtn;
     
 
+    /**
+     * Binds the page object to the active browser session.
+     */
     public TripPaymentPage(WebDriver driver)
     {
         PageFactory.initElements(driver,this);

@@ -10,14 +10,24 @@ import com.rideroundtrip.generic.ValidationOutcome;
 import com.rideroundtrip.pageobjects.ScheduledTripsPage;
 import com.rideroundtrip.pageobjects.SelectPatientPage;
 
+/**
+ * Encapsulates patient-search actions and assertions within the trip flow.
+ */
 public class SelectPatientsFeature
 {
+    /** Emits patient-search progress and assertion context. */
     private static final Logger LOGGER = LoggerFactory.getLogger(SelectPatientsFeature.class);
 
+    /** Driver used to inspect navigation state after patient selection. */
     private final WebDriver driver;
+    /** Page object for the scheduled-trips landing page. */
     private final ScheduledTripsPage scheduledTripsPage;
+    /** Page object for patient search and selection. */
     private final SelectPatientPage selectPatientPage;
 
+    /**
+     * Creates the feature layer for patient-search interactions.
+     */
     public SelectPatientsFeature(WebDriver driver)
     {
         this.driver = driver;
@@ -25,6 +35,9 @@ public class SelectPatientsFeature
         this.selectPatientPage = new SelectPatientPage(driver);
     }
 
+    /**
+     * Opens the patient tab and enters the requested patient name into the search field.
+     */
     public void search(String patientName)
     {
         LOGGER.info("Searching for patient");
@@ -32,6 +45,9 @@ public class SelectPatientsFeature
         selectPatientPage.searchForPatient(patientName);
     }
 
+    /**
+     * Verifies the patient-search result against the expected scenario outcome.
+     */
     public void verifySearch(ValidationOutcome outcome)
     {
         if (ValidationOutcome.VALID == outcome) {

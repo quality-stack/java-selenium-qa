@@ -10,8 +10,12 @@ import com.rideroundtrip.pageobjects.SelectPatientPage;
 import com.rideroundtrip.pageobjects.SetupTripPage;
 import com.rideroundtrip.pageobjects.TripPaymentPage;
 
+/**
+ * Placeholder feature layer for patient-related booking actions.
+ */
 public class PatientFeature
 {
+    /** Driver shared by patient-related booking flows. */
     WebDriver driver;
     LoginPage loginpage;
     ScheduledTripsPage sctp;
@@ -21,6 +25,9 @@ public class PatientFeature
     TripPaymentPage tpp;
     ReviewPage rp;
     
+    /**
+     * Creates the feature layer for patient interactions.
+     */
     public PatientFeature (WebDriver driver)
     {
         this.driver = driver;

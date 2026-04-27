@@ -14,14 +14,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Reporter;
 
+/**
+ * Centralizes browser startup so driver provisioning and browser options stay in one place.
+ */
 public class browserFactory
 {
+    /** Emits browser startup and driver-resolution details. */
     private static final Logger LOGGER = LoggerFactory.getLogger(browserFactory.class);
 
+    /** Prevents utility-style construction. */
     private browserFactory()
     {
     }
 
+    /**
+     * Builds the requested browser instance and applies common driver timeouts.
+     */
     public static WebDriver openBrowser(String browser, String session)
     {
         FrameworkConfig config = FrameworkConfig.getInstance();
@@ -73,6 +81,9 @@ public class browserFactory
         return driver;
     }
 
+    /**
+     * Uses an explicit driver binary when configured, otherwise falls back to managed resolution.
+     */
     private static void configureDriverBinary(String systemPropertyName, String configKey, String browser)
     {
         String configuredDriverPath = FrameworkConfig.getInstance().get(configKey);
@@ -88,6 +99,9 @@ public class browserFactory
         }
     }
 
+    /**
+     * Resolves a compatible driver executable for the requested browser at runtime.
+     */
     private static void setupManagedDriver(String browser)
     {
         switch (browser) {

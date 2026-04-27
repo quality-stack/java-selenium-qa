@@ -11,8 +11,12 @@ import com.rideroundtrip.pageobjects.SelectPatientPage;
 import com.rideroundtrip.pageobjects.SetupTripPage;
 import com.rideroundtrip.pageobjects.TripPaymentPage;
 
+/**
+ * Handles the payer-selection step and payment details during booking.
+ */
 public class TripPaymentFeature 
 {
+    /** Driver shared by the trip-payment flow. */
     WebDriver driver;
     LoginPage loginpage;
     ScheduledTripsPage sctp;
@@ -22,6 +26,9 @@ public class TripPaymentFeature
     TripPaymentPage tpp;
     ReviewPage rp;
     
+    /**
+     * Creates the feature layer for payment interactions.
+     */
     public TripPaymentFeature (WebDriver driver)
     {
         this.driver = driver;
@@ -30,6 +37,9 @@ public class TripPaymentFeature
         rp = new ReviewPage(driver);
     }
     
+    /**
+     * Selects the requested payer type and fills the associated payment fields.
+     */
     void selectPayerType(String payerType)
     {
         Select payerdropdown = new Select(tpp.getPayerType());
@@ -72,6 +82,9 @@ public class TripPaymentFeature
         tpp.getContinuebtn().click();
     }
     
+    /**
+     * Placeholder for payer verification checks after the payment step is completed.
+     */
     public void verifyPayerType()
     {
         
