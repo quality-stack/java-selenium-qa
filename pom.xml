@@ -80,7 +80,6 @@
             <configuration>
                <formats>
                   <format>
-                     <name>misc</name>
                      <includes>
                         <include>README.md</include>
                         <include>.gitignore</include>
