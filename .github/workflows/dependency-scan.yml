@@ -44,8 +44,19 @@ jobs:
             target/dependency-check-report.sarif
           if-no-files-found: warn
 
-      - name: Publish SARIF results
-        uses: github/codeql-action/upload-sarif@v3
+      - name: Detect SARIF output
+        id: sarif
         if: always()
+        shell: bash
+        run: |
+          if [ -f target/dependency-check-report.sarif ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish SARIF results
+        uses: github/codeql-action/upload-sarif@v4
+        if: always() && steps.sarif.outputs.exists == 'true'
         with:
           sarif_file: target/dependency-check-report.sarif
