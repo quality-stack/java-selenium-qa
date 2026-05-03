@@ -15,16 +15,16 @@ public class SearchRefBusFeature {
     WebDriver driver;
     /** Page object for the RedBus search form. */
     RedbusPage redbusPage;
-    
+
     /**
      * Creates the feature layer for RedBus search actions.
      */
-    public SearchRefBusFeature(WebDriver driver) 
+    public SearchRefBusFeature(WebDriver driver)
     {
         this.driver= driver;
         redbusPage = new RedbusPage(driver);
     }
-    
+
     /**
      * Enters the requested origin city into the search form.
      */
@@ -33,10 +33,10 @@ public class SearchRefBusFeature {
         redbusPage.getFrom().isDisplayed();
         redbusPage.getFrom().click();
         redbusPage.getFrom().clear();
-        redbusPage.getFrom().sendKeys(source);	
+        redbusPage.getFrom().sendKeys(source);
         LOGGER.debug("Source field populated");
     }
-    
+
     /**
      * Selects the first suggested origin result.
      */
@@ -46,7 +46,7 @@ public class SearchRefBusFeature {
         redbusPage.getSelectFirst().click();
         LOGGER.debug("Source suggestion selected");
     }
-    
+
     /**
      * Enters the requested destination city into the search form.
      */
@@ -58,7 +58,7 @@ public class SearchRefBusFeature {
         redbusPage.getTo().sendKeys(destination);
         LOGGER.debug("Destination field populated");
     }
-    
+
     /**
      * Selects the first suggested destination result.
      */
@@ -66,9 +66,9 @@ public class SearchRefBusFeature {
         LOGGER.info("Selecting destination suggestion for RedBus search");
         redbusPage.getSelectFirst().isDisplayed();
         redbusPage.getSelectFirst().click();
-        LOGGER.debug("Destination suggestion selected");		
+        LOGGER.debug("Destination suggestion selected");
     }
-    
+
     /**
      * Submits the RedBus search form.
      */
@@ -80,4 +80,3 @@ public class SearchRefBusFeature {
     }
 
 }
-

@@ -10,7 +10,7 @@ import lombok.Getter;
 /**
  * Page object for payer selection and payment details.
  */
-public class TripPaymentPage 
+public class TripPaymentPage
 {
     @FindBy(xpath ="//p[contains(text(),'You selected a Lyft for this trip. The payer type')]")
     private @Getter  WebElement lyftMessage;
@@ -46,7 +46,7 @@ public class TripPaymentPage
     private @Getter WebElement continuebtn;
     @FindBy(xpath = "/html[1]/body[1]/div[1]/div[3]/form[1]/div[13]/a[1]")
     private @Getter WebElement backbtn;
-    
+
 
     /**
      * Binds the page object to the active browser session.
@@ -195,5 +195,5 @@ public class TripPaymentPage
     public void setContinuebtn(WebElement continuebtn) {
         this.continuebtn = continuebtn;
     }
-    
+
 }

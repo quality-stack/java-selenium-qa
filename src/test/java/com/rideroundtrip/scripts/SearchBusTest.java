@@ -26,4 +26,3 @@ public class SearchBusTest extends baseLibrary
       searchFeature.clickSearch();
   }
 }
-

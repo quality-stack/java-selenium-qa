@@ -32,34 +32,34 @@ public class testngListner implements ITestListener
      * Records the start of a test method.
      */
     @Override
-    public void onTestStart(ITestResult result) 
+    public void onTestStart(ITestResult result)
     {
         totalTestExecuted++;
         LOGGER.info("Test started: {}", result.getName());
-        Reporter.log(result.getName()+"script execution starts at "+ new Date(),true);	
+        Reporter.log(result.getName()+"script execution starts at "+ new Date(),true);
     }
 
     /**
      * Records a successful test result.
      */
     @Override
-    public void onTestSuccess(ITestResult result) 
+    public void onTestSuccess(ITestResult result)
     {
         successcount++;
         LOGGER.info("Test passed: {}", result.getName());
-        Reporter.log(result.getName()+" script is passed",true);	
+        Reporter.log(result.getName()+" script is passed",true);
     }
 
     /**
      * Records a failed test result and attaches a screenshot when one can be captured.
      */
     @Override
-    public void onTestFailure(ITestResult result) 
+    public void onTestFailure(ITestResult result)
     {
         failcount++;
         LOGGER.error("Test failed: {}", result.getName(), result.getThrowable());
         Reporter.log(result.getName()+" script is failed",true);
-        
+
         if (!(baseLibrary.getDriver() instanceof TakesScreenshot)) {
             LOGGER.debug("Skipping screenshot capture because the active driver does not support screenshots");
             return;
@@ -71,7 +71,7 @@ public class testngListner implements ITestListener
             screenshotDirectory.mkdirs();
         }
         File destFile = new File(screenshotDirectory, result.getName()+".png");
-        try 
+        try
         {
             Files.copy(srcFile.toPath(),destFile.toPath());
             try (InputStream screenshotStream = Files.newInputStream(destFile.toPath()))
@@ -80,7 +80,7 @@ public class testngListner implements ITestListener
             }
             LOGGER.info("Stored failure screenshot at {}", destFile.getAbsolutePath());
         }
-        catch (IOException e) 
+        catch (IOException e)
         {
             LOGGER.error("Unable to capture screenshot for {}", result.getName(), e);
         }
@@ -91,7 +91,7 @@ public class testngListner implements ITestListener
      * Records a skipped test result.
      */
     @Override
-    public void onTestSkipped(ITestResult result) 
+    public void onTestSkipped(ITestResult result)
     {
         skipcount++;
         LOGGER.info("Test skipped: {}", result.getName());
@@ -102,17 +102,17 @@ public class testngListner implements ITestListener
      * Required TestNG hook for partial-success scenarios.
      */
     @Override
-    public void onTestFailedButWithinSuccessPercentage(ITestResult result) 
+    public void onTestFailedButWithinSuccessPercentage(ITestResult result)
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     /**
      * Resets counters at the beginning of a suite.
      */
     @Override
-    public void onStart(ITestContext context) 
+    public void onStart(ITestContext context)
     {
         totalTestExecuted = 0;
         successcount = 0;
@@ -174,4 +174,3 @@ public class testngListner implements ITestListener
         }
     }
 }
-

@@ -33,4 +33,3 @@ public class BuildFailureGuard
         LOGGER.info("Build guard verified that no tests failed");
     }
 }
-

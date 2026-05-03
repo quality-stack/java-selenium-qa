@@ -23,7 +23,7 @@ public class ReviewPage
     @FindBy(xpath = "/html[1]/body[1]/div[1]/form[1]/div[2]/div[6]/div[1]/div[1]/div[1]/a[1]")
     private @Getter WebElement okaybtn;
     @FindBy(xpath = "/html[1]/body[1]/div[1]/form[1]/div[8]/div[2]/a[1]")
-    private @Getter WebElement backbtn;	
+    private @Getter WebElement backbtn;
 
     /**
      * Binds the page object to the active browser session.
@@ -32,5 +32,5 @@ public class ReviewPage
     {
         PageFactory.initElements(driver,this);
     }
-    
+
 }

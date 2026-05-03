@@ -93,5 +93,5 @@ public class SetupTripPage
 
     public WebElement getFacilitytab() {
         return facilitytab;
-    }	
+    }
 }

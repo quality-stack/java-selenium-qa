@@ -11,26 +11,26 @@ import com.rideroundtrip.pageobjects.SelectPatientPage;
 /**
  * Encapsulates the initial trip-booking entry step from the scheduled-trips page.
  */
-public class ScheduledTripFeature 
+public class ScheduledTripFeature
 {
     /** Driver used to assert the current page title after navigation. */
     WebDriver driver;
     LoginPage loginpage;
     ScheduledTripsPage stp;
     SelectPatientPage spp;
-    
+
     /**
      * Creates the feature layer for scheduled-trip interactions.
      */
-    public ScheduledTripFeature(WebDriver driver) 
+    public ScheduledTripFeature(WebDriver driver)
     {
         this.driver= driver;
         loginpage = new LoginPage(driver);
         stp = new ScheduledTripsPage(driver);
         spp = new SelectPatientPage(driver);
-        
+
     }
-    
+
     /**
      * Opens the Book Trip flow and verifies the patient-selection page is loaded.
      */

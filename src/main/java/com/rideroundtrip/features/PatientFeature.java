@@ -24,7 +24,7 @@ public class PatientFeature
     PatientNeedsPage pnp;
     TripPaymentPage tpp;
     ReviewPage rp;
-    
+
     /**
      * Creates the feature layer for patient interactions.
      */

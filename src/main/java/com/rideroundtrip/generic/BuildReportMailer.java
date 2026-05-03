@@ -143,4 +143,3 @@ public class BuildReportMailer
         zipOutputStream.closeEntry();
     }
 }
-

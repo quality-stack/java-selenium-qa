@@ -16,7 +16,7 @@ import com.rideroundtrip.pageobjects.TripPaymentPage;
 /**
  * Populates the patient-needs step based on the selected transportation type.
  */
-public class PatientNeedsFeature 
+public class PatientNeedsFeature
 {
     /** Emits patient-needs flow progress for debugging. */
     private static final Logger LOGGER = LoggerFactory.getLogger(PatientNeedsFeature.class);
@@ -29,7 +29,7 @@ public class PatientNeedsFeature
     PatientNeedsPage pnp;
     TripPaymentPage tpp;
     ReviewPage rp;
-    
+
     /**
      * Creates the feature layer for patient-needs interactions.
      */
@@ -40,7 +40,7 @@ public class PatientNeedsFeature
         pnp = new PatientNeedsPage(driver);
         tpp = new TripPaymentPage(driver);
     }
-    
+
     /**
      * Selects the requested vehicle type and fills the matching patient-needs controls.
      */
@@ -48,7 +48,7 @@ public class PatientNeedsFeature
     {
         LOGGER.info("Selecting vehicle type for patient-needs step");
         Select tripreason = new Select(pnp.getdrptripreason());
-        if("Lyft".equalsIgnoreCase(vehicleType)) 
+        if("Lyft".equalsIgnoreCase(vehicleType))
         {
             pnp.getAmbulatory_vehicle().click();
             pnp.getlyft_ride().click();
@@ -58,21 +58,21 @@ public class PatientNeedsFeature
             LOGGER.debug("Configured ambulatory Lyft ride options");
 //			pnp.get
         }
-        
+
         if("Medical Sedan".equalsIgnoreCase(vehicleType))
         {
             LOGGER.debug("Medical Sedan branch reached but not yet implemented");
         }
-        
+
         if("Wheelchair".equalsIgnoreCase(vehicleType))
         {
             LOGGER.debug("Wheelchair branch reached but not yet implemented");
         }
-        
+
         if("Stretcher".equalsIgnoreCase(vehicleType))
         {
             LOGGER.debug("Stretcher branch reached but not yet implemented");
         }
-        
+
     }
 }

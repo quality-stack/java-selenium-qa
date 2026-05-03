@@ -109,4 +109,3 @@ public class BuildExecutionSummary
         return skippedCount;
     }
 }
-

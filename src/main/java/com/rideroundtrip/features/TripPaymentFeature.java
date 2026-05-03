@@ -14,7 +14,7 @@ import com.rideroundtrip.pageobjects.TripPaymentPage;
 /**
  * Handles the payer-selection step and payment details during booking.
  */
-public class TripPaymentFeature 
+public class TripPaymentFeature
 {
     /** Driver shared by the trip-payment flow. */
     WebDriver driver;
@@ -25,7 +25,7 @@ public class TripPaymentFeature
     PatientNeedsPage pnp;
     TripPaymentPage tpp;
     ReviewPage rp;
-    
+
     /**
      * Creates the feature layer for payment interactions.
      */
@@ -36,7 +36,7 @@ public class TripPaymentFeature
         tpp = new TripPaymentPage(driver);
         rp = new ReviewPage(driver);
     }
-    
+
     /**
      * Selects the requested payer type and fills the associated payment fields.
      */
@@ -49,7 +49,7 @@ public class TripPaymentFeature
             payerdropdown.selectByIndex(1);
             facilityprogram.selectByIndex(1);
         }
-        
+
         else if(payerType == "Medicaid")
         {
             payerdropdown.selectByVisibleText("Medicaid");
@@ -58,7 +58,7 @@ public class TripPaymentFeature
             tpp.getMedicaidID().sendKeys("1");
             tpp.getZipcode().sendKeys("76500");
         }
-        
+
         else if(payerType == "Patient")
         {
             payerdropdown.selectByVisibleText("Patient");
@@ -69,7 +69,7 @@ public class TripPaymentFeature
             tpp.getCardExpiry().sendKeys("0122");
             tpp.getCardCVC().sendKeys("123");
         }
-        
+
         else if(payerType == "Private Insurance")
         {
             payerdropdown.selectByVisibleText("Private Insurance");
@@ -78,15 +78,15 @@ public class TripPaymentFeature
             tpp.getPlanType().sendKeys("Test Plan");
             tpp.getInsuranceID().sendKeys("1");
         }
-        
+
         tpp.getContinuebtn().click();
     }
-    
+
     /**
      * Placeholder for payer verification checks after the payment step is completed.
      */
     public void verifyPayerType()
     {
-        
+
     }
 }

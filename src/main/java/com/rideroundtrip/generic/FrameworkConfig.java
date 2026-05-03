@@ -124,4 +124,3 @@ public final class FrameworkConfig
         return value != null && !value.trim().isEmpty();
     }
 }
-

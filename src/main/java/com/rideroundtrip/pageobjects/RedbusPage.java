@@ -12,13 +12,13 @@ public class RedbusPage extends BasePage {
         @FindBy(xpath="//input[@data-message='Please enter a source city']")
         private @Getter  WebElement From;
         @FindBy(xpath ="//input[@data-message='Please enter a destination city']")
-        private @Getter WebElement To;		
+        private @Getter WebElement To;
         @FindBy(xpath="//li[@select-id='results[0]']")
         private @Getter  WebElement selectFirst;
         @FindBy(xpath="//input[@id='onward_cal']")
-        private @Getter  WebElement Cal;		
+        private @Getter  WebElement Cal;
         @FindBy(id="search_btn")
-        private @Getter  WebElement searchBtn;		
+        private @Getter  WebElement searchBtn;
         /**
          * Binds the page object to the active browser session.
          */
@@ -50,6 +50,5 @@ public class RedbusPage extends BasePage {
         public void setSelectFirst(WebElement selectFirst) {
             this.selectFirst = selectFirst;
         }
-        
-}
 
+}

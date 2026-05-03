@@ -20,7 +20,7 @@ public class excelUtility
 {
     /** Absolute or relative path to the workbook file on disk. */
     String filepath;
-    
+
     /**
      * Creates a reader bound to the supplied workbook path.
      */
@@ -45,7 +45,7 @@ public class excelUtility
                 Reporter.log("Unable to read data from sheet=" + sheetName + ", row=" + row + ", cell=" + cell, true);
                 return "";
             }
-            
+
             switch(cl.getCellType())
             {
                 case STRING:
@@ -55,12 +55,12 @@ public class excelUtility
                 }
                 case NUMERIC:
                 {
-                    if(DateUtil.isCellDateFormatted(cl)) 
+                    if(DateUtil.isCellDateFormatted(cl))
                     {
                         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
                         value = sdf.format(cl.getDateCellValue());
                     }
-                    else 
+                    else
                     {
                         long longvalue = (long)cl.getNumericCellValue();
                         value = Long.toString(longvalue);
@@ -84,8 +84,7 @@ public class excelUtility
             throw new IllegalStateException("Unable to read Excel data from " + filepath, e);
         }
         return value == null ? "" : value;
-        
+
     }
 
 }
-

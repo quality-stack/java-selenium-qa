@@ -16,7 +16,7 @@ import com.rideroundtrip.pageobjects.TripPaymentPage;
 /**
  * Handles trip-type and location-selection actions during trip setup.
  */
-public class SetupTripFeature 
+public class SetupTripFeature
 {
     /** Emits trip-setup flow progress for debugging. */
     private static final Logger LOGGER = LoggerFactory.getLogger(SetupTripFeature.class);
@@ -29,7 +29,7 @@ public class SetupTripFeature
     PatientNeedsPage pnp;
     TripPaymentPage tpp;
     ReviewPage rp;
-    
+
     /**
      * Creates the feature layer for trip-setup interactions.
      */
@@ -39,7 +39,7 @@ public class SetupTripFeature
         spp = new SelectPatientPage(driver) ;
         stp = new SetupTripPage(driver);
     }
-    
+
     /**
      * Selects either a one-way or round-trip journey type.
      */
@@ -51,7 +51,7 @@ public class SetupTripFeature
             stp.getOnewaybtn().click();
             LOGGER.debug("Selected one-way trip");
         }
-        
+
         else if ("Round-Trip".equalsIgnoreCase(tripType) || "RoundTrip".equalsIgnoreCase(tripType))
         {
             stp.getRoundtripbtn().click();
@@ -62,7 +62,7 @@ public class SetupTripFeature
             Reporter.log("Invalid Trip Type",true);
         }
     }
-    
+
     /**
      * Enables repeat scheduling when the supplied repeat count is greater than zero.
      */
@@ -75,7 +75,7 @@ public class SetupTripFeature
             LOGGER.debug("Enabled repeat trip option");
         }
     }
-    
+
     /**
      * Chooses the first available pickup location when one is present.
      */
@@ -86,16 +86,16 @@ public class SetupTripFeature
         if(stp.getNoresidencemsg().isDisplayed())
         {
             LOGGER.info("No pickup locations available in residence tab");
-            Reporter.log("No pickup locations are available in Residence Tab");			
+            Reporter.log("No pickup locations are available in Residence Tab");
         }
-        else 
+        else
         {
             stp.getselectlocation().click();
             LOGGER.debug("Pickup location selected");
             Reporter.log("Pickup location selected");
         }
     }
-    
+
     /**
      * Chooses the first available drop-off location when one is present.
      */
@@ -107,16 +107,16 @@ public class SetupTripFeature
         if(stp.getNoresidencemsg().isDisplayed())
         {
             LOGGER.info("No drop locations available in facility tab");
-            Reporter.log("No drop locations are available in Facility Tab");			
+            Reporter.log("No drop locations are available in Facility Tab");
         }
-        else 
+        else
         {
             stp.getselectlocation().click();
             LOGGER.debug("Drop location selected");
             Reporter.log("Drop location selected");
-            
+
         }
     }
-    
-    
+
+
 }

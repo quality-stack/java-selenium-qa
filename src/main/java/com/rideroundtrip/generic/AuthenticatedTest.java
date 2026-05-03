@@ -20,4 +20,3 @@ public abstract class AuthenticatedTest extends baseLibrary
         loginFeature.verifyLogin(ValidationOutcome.VALID);
     }
 }
-
