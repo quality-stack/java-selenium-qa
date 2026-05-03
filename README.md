@@ -26,6 +26,21 @@ Allure result files are written to `target/allure-results`.
 
 Local `mvn test` runs do not automatically trigger the CI reporting/email pipeline.
 
+## Build quality gates
+
+The Maven build now enforces a small quality baseline during `validate`:
+
+- `maven-enforcer-plugin` checks the Maven and Java runtime versions
+- `spotless-maven-plugin` checks basic formatting for Java, Maven, workflow, and resource files
+
+Useful commands:
+
+```bash
+mvn validate
+mvn spotless:check
+mvn spotless:apply
+```
+
 ## Viewing Allure reports
 
 Generate the HTML report:
@@ -88,6 +103,18 @@ Optional artifact behavior:
 - if this flag is omitted or set to `false`, raw Allure results are not emailed
 
 If tests fail, the email step still runs first and the Maven build fails afterward so CI still gets the correct failed status.
+
+## CI health workflows
+
+The repository now includes two additional GitHub Actions workflows:
+
+- `Framework Health`
+  - runs `mvn -B -DskipTests verify`
+  - checks that the framework compiles and passes Maven quality gates without relying on app-specific credentials
+- `Dependency Scan`
+  - runs OWASP Dependency-Check against Maven dependencies
+  - publishes HTML, JSON, and SARIF reports as workflow artifacts
+  - uploads SARIF results to GitHub code scanning
 
 ## Running with custom configuration
 
