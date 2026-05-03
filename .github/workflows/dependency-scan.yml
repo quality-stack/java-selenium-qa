@@ -39,13 +39,24 @@ jobs:
       - name: Run dependency scan
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
-        run: >
-          mvn -B -DskipTests
-          org.owasp:dependency-check-maven:12.2.1:check
-          -DdataDirectory=${{ env.DC_DATA_DIR }}
-          -Dformats=HTML,JSON,SARIF
-          -DfailBuildOnCVSS=11
-          -DnvdApiKey=${{ secrets.NVD_API_KEY }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          run_scan() {
+            mvn -B -DskipTests \
+              org.owasp:dependency-check-maven:12.2.1:check \
+              -DdataDirectory="${DC_DATA_DIR}" \
+              -Dformats=HTML,JSON,SARIF \
+              -DfailBuildOnCVSS=11 \
+              -DnvdApiKey="${NVD_API_KEY}"
+          }
+
+          if ! run_scan; then
+            echo "Dependency-Check failed on cached data. Clearing ${DC_DATA_DIR} and retrying once..."
+            rm -rf "${DC_DATA_DIR}"
+            run_scan
+          fi
 
       - name: Upload dependency reports
         uses: actions/upload-artifact@v4
