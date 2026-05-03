@@ -154,4 +154,3 @@ For app-specific flows like login, patient search, and trip booking, set the rel
 - You can disable auto-management with `driver.auto.manage=false`.
 - The active Eclipse classpath no longer depends on the deleted `jarfiles/` folder.
 - If required app-specific values are missing, those tests are skipped instead of failing for configuration reasons.
-
